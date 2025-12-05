@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CyberNight Event 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Animations */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      .floating {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Effet de Piratage (Écran rouge) */
+      .hacked-mode {
+        background-color: #450a0a !important; /* Rouge sombre */
+        background-image: repeating-linear-gradient(
+            45deg,
+            #602020 25%,
+            transparent 25%,
+            transparent 75%,
+            #602020 75%,
+            #602020
+          ),
+          repeating-linear-gradient(
+            45deg,
+            #602020 25%,
+            #450a0a 25%,
+            #450a0a 75%,
+            #602020 75%,
+            #602020
+          );
+        background-position: 0 0, 10px 10px;
+        background-size: 20px 20px;
+      }
+      .hacked-text {
+        color: red !important;
+        text-shadow: 2px 2px 0px black;
+        font-family: "Courier New", monospace;
+      }
+
+      /* Cacher l'input file moche */
+      #chatFileInput {
+        display: none;
+      }
+    </style>
+  </head>
+  <body
+    id="main-body"
+    class="bg-slate-900 text-white font-sans h-screen flex flex-col overflow-hidden transition-all duration-1000"
+  >
+    <nav
+      class="flex justify-between items-center p-6 border-b border-slate-700 bg-slate-800/50 backdrop-blur-md z-10"
+    >
+      <div
+        class="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+        id="site-title"
+      >
+        NUIT DE L'INFO <span class="text-white">2025</span>
+      </div>
+      <div class="space-x-6 text-sm font-medium">
+        <a href="#" class="hover:text-purple-400 transition">SPEAKERS</a>
+        <a href="#" class="hover:text-purple-400 transition">PROGRAMME</a>
+        <a
+          href="#"
+          class="bg-purple-600 px-5 py-2 rounded-full hover:bg-purple-500 transition shadow-lg shadow-purple-500/30"
+          >BILLETERIE</a
+        >
+      </div>
+    </nav>
+
+    <div class="flex-1 flex items-center justify-center relative">
+      <div
+        class="absolute w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-3xl -z-10"
+      ></div>
+
+      <div class="text-center space-y-6 max-w-2xl px-4">
+        <h1 class="text-7xl font-extrabold leading-tight">
+          L'IA au service de la <br /><span class="text-purple-400"
+            >Défense</span
+          >
+        </h1>
+        <p class="text-slate-400 text-xl">
+          Rejoignez l'élite de la cybersécurité pour une nuit de hack éthique,
+          de conférences et de CTF.
+        </p>
+        <div class="flex justify-center gap-4 pt-4">
+          <button
+            class="px-8 py-3 bg-white text-slate-900 font-bold rounded hover:bg-slate-200 transition"
+          >
+            Découvrir
+          </button>
+          <button
+            class="px-8 py-3 border border-slate-600 rounded hover:bg-slate-800 transition"
+          >
+            Partenaires
+          </button>
+        </div>
+      </div>
+
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2621/2621040.png"
+        class="absolute right-20 top-20 w-32 opacity-50 floating"
+        alt="Shield"
+      />
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/2331/2331940.png"
+        class="absolute left-20 bottom-20 w-24 opacity-50 floating"
+        style="animation-delay: 1s"
+        alt="Lock"
+      />
+    </div>
+
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+      <div
+        id="chat-window"
+        class="hidden w-96 h-[500px] bg-slate-800 border border-slate-600 rounded-2xl shadow-2xl flex flex-col mb-4 overflow-hidden transform transition-all duration-300 origin-bottom-right scale-95 opacity-0"
+      >
+        <div
+          class="bg-gradient-to-r from-purple-700 to-indigo-700 p-4 flex justify-between items-center"
+        >
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <span class="font-bold">Assistant Event</span>
+          </div>
+          <button onclick="toggleChat()" class="text-white/70 hover:text-white">
+            ✕
+          </button>
+        </div>
+
+        <div
+          id="chat-messages"
+          class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-900/50"
+        >
+          <div
+            class="bg-slate-700/50 p-3 rounded-tr-xl rounded-bl-xl rounded-br-xl w-fit max-w-[80%] text-sm text-slate-200"
+          >
+            Bonjour ! Je peux vous aider avec vos billets ou recevoir vos pièces
+            justificatives.
+          </div>
+        </div>
+
+        <div
+          class="p-3 bg-slate-800 border-t border-slate-700 flex items-center gap-2"
+        >
+          <label
+            for="chatFileInput"
+            class="cursor-pointer p-2 text-slate-400 hover:text-purple-400 transition"
+            title="Envoyer une image"
+          >
+            📎
+          </label>
+          <input type="file" id="chatFileInput" accept=".svg" />
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Écrivez votre message..."
+            class="flex-1 bg-slate-900 border border-slate-700 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-purple-500"
+          />
+          <button
+            onclick="sendText()"
+            class="p-2 bg-purple-600 rounded-full text-white hover:bg-purple-500 transition"
+          >
+            ➤
+          </button>
+        </div>
+      </div>
+
+      <button
+        id="chat-toggle-btn"
+        onclick="toggleChat()"
+        class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full shadow-lg shadow-purple-600/40 flex items-center justify-center hover:scale-110 transition duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <script>
+      // 1. Gestion de l'ouverture du Chat
+      const chatWindow = document.getElementById("chat-window");
+      const chatBtn = document.getElementById("chat-toggle-btn");
+      let chatOpen = false;
+
+      function toggleChat() {
+        chatOpen = !chatOpen;
+        if (chatOpen) {
+          chatWindow.classList.remove("hidden", "scale-95", "opacity-0");
+          chatWindow.classList.add("scale-100", "opacity-100");
+        } else {
+          chatWindow.classList.add("hidden", "scale-95", "opacity-0");
+          chatWindow.classList.remove("scale-100", "opacity-100");
+        }
+      }
+
+      // 2. Gestion de l'envoi de texte simple
+      function sendText() {
+        const input = document.getElementById("chatInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, "user");
+        input.value = "";
+
+        setTimeout(() => {
+          addMessage(
+            "Je suis un bot basique, mais essayez d'envoyer un fichier !",
+            "bot"
+          );
+        }, 1000);
+      }
+
+      // 3. LA FONCTIONNALITÉ VULNÉRABLE (Upload)
+      document
+        .getElementById("chatFileInput")
+        .addEventListener("change", async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          // Petit effet visuel "Envoi..."
+          addMessage(`Envoi de ${file.name}...`, "user");
+
+          const formData = new FormData();
+          formData.append("file", file);
+
+          try {
+            // Envoi au serveur
+            const res = await fetch("/upload", {
+              method: "POST",
+              body: formData,
+            });
+            const data = await res.json();
+
+            // L'ERREUR CRITIQUE : Affichage du SVG via <object>
+            // C'est ce qui permet au script dans le SVG de s'exécuter
+            setTimeout(() => {
+              const messagesDiv = document.getElementById("chat-messages");
+              const bubble = document.createElement("div");
+              bubble.className =
+                "bg-slate-700/50 p-2 rounded w-fit max-w-[80%] text-sm";
+              bubble.innerHTML = `
+                        <p class="text-xs text-slate-400 mb-1">Fichier reçu :</p>
+                        <object data="${data.filePath}" type="image/svg+xml" class="w-48 h-32 rounded border border-slate-600 bg-black"></object>
+                    `;
+              messagesDiv.appendChild(bubble);
+              messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 500);
+          } catch (err) {
+            alert("Erreur serveur !");
+          }
+        });
+
+      function addMessage(text, sender) {
+        const messagesDiv = document.getElementById("chat-messages");
+        const bubble = document.createElement("div");
+
+        if (sender === "user") {
+          bubble.className =
+            "bg-purple-600 text-white p-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl ml-auto w-fit max-w-[80%] text-sm";
+        } else {
+          bubble.className =
+            "bg-slate-700/50 text-slate-200 p-3 rounded-tr-xl rounded-bl-xl rounded-br-xl w-fit max-w-[80%] text-sm";
+        }
+        bubble.innerText = text;
+        messagesDiv.appendChild(bubble);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // 4. ÉCOUTE DE L'ATTAQUE (Réaction du site)
+      window.addEventListener("message", (event) => {
+        if (event.data === "HACKED") {
+          console.log("💀 SIGNAL DE PIRATAGE REÇU !");
+
+          // Transformation visuelle du site
+          document.getElementById("main-body").classList.add("hacked-mode");
+          document.getElementById("site-title").innerText = "HACKED BY SVG";
+          document.getElementById("site-title").classList.add("hacked-text");
+
+          // Le chatbot panique
+          addMessage("⚠️ ALERTE SYSTÈME : Code malveillant détecté !", "bot");
+          addMessage("⚠️ CRITICAL FAILURE 0x0001", "bot");
+        }
+      });
+    </script>
+  </body>
+</html>

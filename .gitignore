@@ -1,0 +1,9 @@
+# Dépendances Node.js (très lourd, on ne les envoie jamais)
+node_modules/
+
+# Logs et fichiers systèmes
+.DS_Store
+npm-debug.log
+
+# Dossier d'upload (on veut que le repo soit propre sans tes tests)
+uploads/

