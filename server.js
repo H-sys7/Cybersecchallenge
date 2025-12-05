@@ -34,3 +34,9 @@ app.post("/upload", upload.single("file"), (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Site Événementiel lancé sur http://localhost:${PORT}`);
 });
+
+const PORT = process.env.PORT || 3000; // Render va remplir process.env.PORT
+
+server.listen(PORT, () => {
+    console.log(`🔥 Serveur lancé sur le port ${PORT}`);
+});
